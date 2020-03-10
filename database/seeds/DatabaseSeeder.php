@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
     	]);
     	factory(App\User::class, 7)->create();
          //$this->call(TasksTableSeeder::class);
-        App\Page::create([
+        /*App\Page::create([
         	'parent_id' => null,
         	'title' => 'Quienes Somos',
         	'slug' => 'quienes-somos',
@@ -36,6 +36,6 @@ class DatabaseSeeder extends Seeder
         	'title' => 'Visión',
         	'slug' => 'vision',
         	'body' => 'Contenido de vision.',
-        ]);
+        ]);*/
     }
 }

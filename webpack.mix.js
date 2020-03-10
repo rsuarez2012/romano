@@ -11,15 +11,31 @@ const mix = require('laravel-mix');
  |
  */
 
-/*mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');*/
+mix.js('resources/js/app.js', 'public/js');
+    //.sass('resources/sass/app.scss', 'public/css');
+	
+//mix.stylus('resources/css/app1.css', 'public/css/app1.css');
 
-mix.scripts([
-	'resources/js/jquery-3.2.1.min.js',
+
+
+
+
+
+
+
+
+
+
+
+
+/*mix.scripts([
+	//'resources/js/jquery-3.2.1.min.js',
 	'resources/js/bootstrap.js',
-	'resources/js/toastr.js',
+	//'resources/js/toastr.js',
 	'resources/js/vue.js',
 	'resources/js/axios.js',
-	'resources/js/app.js',
+	'resources/js/appBrand.js',
+	'resources/js/appCategory.js',
+	//'resources/js/appClient.js',
 	], 'public/js/app.js'
-);
+);*/

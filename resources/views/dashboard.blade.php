@@ -17,14 +17,14 @@
 	        <!-- small box -->
 	        <div class="small-box bg-aqua">
 	          <div class="inner">
-	            <h3>150</h3>
+	            <h3>{{ $orders->count() }}</h3>
 
-	            <p>New Orders</p>
+	            <p>Ordenes</p>
 	          </div>
 	          <div class="icon">
 	            <i class="ion ion-bag"></i>
 	          </div>
-	          <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+	          <a href="#" class="small-box-footer">Nueva Orden <i class="fa fa-arrow-circle-right"></i></a>
 	        </div>
 	      </div>
 	      <!-- ./col -->
@@ -32,9 +32,9 @@
 	        <!-- small box -->
 	        <div class="small-box bg-green">
 	          <div class="inner">
-	            <h3>53<sup style="font-size: 20px">%</sup></h3>
+	            <h3>{{ $products->count() }}</h3>
 
-	            <p>Bounce Rate</p>
+	            <p>Productos</p>
 	          </div>
 	          <div class="icon">
 	            <i class="ion ion-stats-bars"></i>
@@ -47,9 +47,9 @@
 	        <!-- small box -->
 	        <div class="small-box bg-yellow">
 	          <div class="inner">
-	            <h3>44</h3>
+	            <h3>{{ $clients->count() }}</h3>
 
-	            <p>User Registrations</p>
+	            <p>Clientes</p>
 	          </div>
 	          <div class="icon">
 	            <i class="ion ion-person-add"></i>
@@ -62,9 +62,9 @@
 	        <!-- small box -->
 	        <div class="small-box bg-red">
 	          <div class="inner">
-	            <h3>65</h3>
+	            <h3>{{ $devolutions->count() }}</h3>
 
-	            <p>Unique Visitors</p>
+	            <p>Ordenes Canceladas</p>
 	          </div>
 	          <div class="icon">
 	            <i class="ion ion-pie-graph"></i>
@@ -73,73 +73,113 @@
 	        </div>
 	      </div>
 	      <!-- ./col -->
-	    <div class="col-sm-7">
-	  	<ul class="list-group">
-	  	@foreach($users as $user)
-	  		<li class="list-group-item">
-	  			<h4>{{ $user->name }}</h4>
-	  			<em>ultimo ingreso: ----</em>
-	  		</li>
-	  	@endforeach
-	  </ul>
-  	</div>
+
+			<div class="col-md-8">
+	    	<!-- TABLE: LATEST ORDERS -->
+	        	<div class="box box-info">
+	            	<div class="box-header with-border">
+		              	<h3 class="box-title">Ultimas Ordenes</h3>
+
+		              	<div class="box-tools pull-right">
+		                	<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+		                	</button>
+		                	<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+		            	</div>
+	            	</div>
+            	<!-- /.box-header -->
+	            	<div class="box-body">
+	              <div class="table-responsive">
+	                <table class="table no-margin">
+	                  <thead>
+		                  <tr>
+		                    <th>Orden ID</th>
+		                    <th>Clientes</th>
+		                    <th>Estatus</th>
+		                    <th>Productos</th>
+		                  </tr>
+	                  </thead>
+	                  <tbody>
+	                  	@foreach($orders_lasts as $last)
+	                  	<tr>
+		                    <td><a href="pages/examples/invoice.html">{{ $last->order_number }}</a></td>
+		                    <td>{{ $last->client->client_name }}</td>
+		                    <td>
+		                    	@if($last->status == 0)
+		                    		<span class="label label-danger">{{ $last->status_type }}
+		                    		</span>
+		                    	@else
+									<span class="label label-success">{{ $last->status_type }}</span>
+								@endif
+		                    </td>
+		                    @foreach($last->detailorder as $detail)
+		                    <td>
+		                      <div class="sparkbar" data-color="#00a65a" data-height="20">{{ $detail->products->name }},
+		                      </div>
+		                    </td>
+		                    @endforeach
+		                </tr>
+		                @endforeach
+	                  </tbody>
+	                </table>
+	              </div>
+	              <!-- /.table-responsive -->
+	            	</div>
+            	<!-- /.box-body -->
+            		<div class="box-footer clearfix">
+			            <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Nueva Orden</a>
+			            <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">Ver Todas las Ordenes</a>
+            		</div>
+            	<!-- /.box-footer -->
+          		</div>
+          <!-- /.box -->
+        	</div>
+        <!-- /.col -->
+	    	<div class="col-md-4">
+          <!-- PRODUCT LIST -->
+	          	<div class="box box-primary">
+		            <div class="box-header with-border">
+		              <h3 class="box-title">Ultimos Productos Añadidos</h3>
+
+		              <div class="box-tools pull-right">
+		                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+		                </button>
+		                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+		              </div>
+		            </div>
+	            <!-- /.box-header -->
+	            	<div class="box-body">
+	            		@foreach($products_lasts as $productLast)
+			            <ul class="products-list product-list-in-box">
+			            	<li class="item">
+			                  <!--<div class="product-img">
+			                    <img src="dist/img/default-50x50.gif" alt="Product Image">
+			                  </div>-->
+			                  <div class="product-info">
+			                    <a href="javascript:void(0)" class="product-title">
+			                    	{{ $productLast->name }}
+			                      	<span class="label label-success pull-right">
+			                      		{{ $productLast->buy }}
+			                      	</span>
+			                    </a>
+			                        <span class="product-description">
+			                          Categoria: {{ $productLast->category->category }}
+			                        </span>
+			                  </div>
+			                </li>
+			            </ul>
+			            @endforeach
+	            	</div>
+	            <!-- /.box-body -->
+	            <div class="box-footer text-center">
+	              	<a href="javascript:void(0)" class="uppercase">Ver Todos Los Productos</a>
+	            </div>
+	            <!-- /.box-footer -->
+	          </div>
+	          <!-- /.box -->
+	        </div>
+	        <!-- /.col -->
 	    </div>
 	    <!-- /.row -->
+
   	</section>
-  	
-  <!--<div class="col-sm-7">
-			<!--<a href="#" class="btn btn-primary pull-right" data-toggle="modal" data-target="#create">Nueva tarea</a>
-			<table class="table table-hover table-striped">
-				<thead>
-					<tr>
-						
-						<th>id</th>
-						<th>Tarea</th>
-						<th colspan="2">&nbsp;</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr v-for="keep in keeps">
-						<td width="10px">@{{keep.id}}</td>
-						<td>@{{keep.keep }}</td>
-						<td width="10px">
-							<a href="#" class="btn btn-warning btn-sm" v-on:click.prevent="editKeep(keep)" v-on:click.prevent="editKeep(keep)">Editar</a>
-						</td>
-						<td width="10px">
-							<a href="#" class="btn btn-danger btn-sm" v-on:click.prevent="deleteKeep(keep)">Eliminar</a>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<nav>
-				<ul class="pagination">
-					<li v-if="pagination.current_page > 1">
-						<a href="#" @click.prevent="changePage(pagination.current_page - 1)">
-							<span>Atras</span>
-						</a>
-					</li>
-					
-					<li v-for="page in pagesNumber" v-bind:class="[ page == isActived ? 'active' : '']">
-						<a href="#" @click.prevent="changePage(page)">
-							@{{ page }}
-						</a>
-					</li>
-					
-					<li v-if="pagination.current_page < pagination.last_page">
-						<a href="#" @click.prevent="changePage(pagination.current_page + 1)">
-							<span>Siguiente</span>
-						</a>
-					</li>
-				</ul>
-			</nav>
-			@include('create')
-			@include('edit')
-		</div>
-		<div class="col-sm-5">
-			<pre>
-				@{{ $data }}
-			</pre>
-		</div>-->
-	</div>
-</div>
 @endsection

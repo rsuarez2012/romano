@@ -160,10 +160,19 @@
               </li>
             </ul>
           </li>
-          <!-- Control Sidebar Toggle Button -->
           <li>
-            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+              <a href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();" title="Cerrar Sessión">
+                                        {{-- __('Logout') --}}<span class="glyphicon glyphicon-off"></span></a>
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
           </li>
+          <!-- Control Sidebar Toggle Button -->
+          <!--<li>
+            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+          </li>-->
         </ul>
       </div>
     </nav>

@@ -11,17 +11,11 @@
 |
 */
 
-/*Route::get('/', function () {
-    return view('dashboard');
-});*/
+Route::get('/', function () {
+    return view('auth.login');
+});
 //frontend
-Route::get('/', 'PageController@home')->name('home');
+//Route::get('/', 'PageController@home')->name('home');
+//Route::get('/', 'Auth\LoginController@login')->name('login');
 Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');
-
-/*Route::get('/', function () {
-    return view('app2');
-});*/
-//Panel Admin
-
-
+//Route::get('/home', 'HomeController@index')->name('home');

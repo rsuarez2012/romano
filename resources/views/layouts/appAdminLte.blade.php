@@ -7,17 +7,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Global Sistem Family</title>
+  <title>Importadora Romano Castaño</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="{{asset('css/font-awesome.min.css')}}">
-  <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">-->
+  <!--<link rel="stylesheet" href="{{--asset('css/font-awesome.min.css')--}}">-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="{{asset('css/ionicons.min.css')}}">
-  <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">-->
+  <!--<link rel="stylesheet" href="{{--asset('css/ionicons.min.css')--}}">-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('css/AdminLTE.min.css')}}">
   <link rel="stylesheet" href="{{asset('plugins/datatables/dataTables.bootstrap.css')}}">
@@ -33,6 +33,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
+  <link rel="stylesheet" href="{{asset('css/toastr.css')}}">
+  <link rel="stylesheet" href="{{asset('css/select2.min.css')}}">
+
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -84,6 +87,34 @@ desired effect
 
     <!-- Main content -->
     <section class="content">
+      <div class="row">
+        <div class="col-sm-12 col-sm-offset-0">
+            @if(session('info'))
+                <div class="alert alert-success">
+                  <i class="fa fa-check"></i>
+                    {{ session('info') }}
+                </div>
+            @endif 
+            @if(session('error'))
+                <div class="alert alert-danger">
+                  <i class="fa fa-check"></i>
+                    {{ session('error') }}
+                </div>
+            @endif                    
+        </div>
+        @if(count($errors))
+            <div class="col-sm-12 col-sm-offset-0">
+                <div class="alert alert-danger">
+                   
+                    <ul>
+                        @foreach($errors->all() as $error)
+                        <li><i class="fa fa-exclamation-circle"></i> {{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        @endif
+    </div>
 
       @yield('content')
 
@@ -99,7 +130,7 @@ desired effect
       Anything you want
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2020 <a href="#">Company</a>.</strong> All rights reserved.
   </footer>
 
   <!-- Control Sidebar -->
@@ -196,21 +227,54 @@ desired effect
      Both of these plugins are recommended to enhance the
      user experience. Slimscroll is required when using the
      fixed layout. -->
-
-
+<script src="{{asset('js/app.js')}}"></script>
+<script src="{{asset('js/toastr.js')}}"></script>
+<script src="{{asset('js/select2.full.min.js')}}"></script>
+<script>  
+        @if(Session::has('message'))
+          var type = "{{Session::get('alert-type', 'info')}}";
+          switch(type){
+            case 'info':
+              toastr.info("{{Session::get('message')}}");
+              break;
+            case 'warning':
+              toastr.warning("{{Session::get('message')}}");
+              break;
+            case 'success':
+              toastr.success("{{Session::get('message')}}");
+              break;
+            case 'error':
+              toastr.error("{{Session::get('message')}}");
+              break;
+          }
+        @endif
+      </script>
 <script>
   $(function () {
+
     //$("#example1").DataTable();
-    $('#complexes-tables').DataTable({
+    $('#category-tables').DataTable({
       "paging": true,
       "lengthChange": true,
       "searching": true,
       "ordering": true,
       "info": true,
-      "autoWidth": false
+      "autoWidth": false,
+      "responsive":true,
+      "scrollX": false,
+      "language":{
+
+        "search": "Buscar:",
+        "lengthMenu": "Mostrar _MENU_ Registros",
+        "info": "Mostrando _PAGE_ de _PAGES_ registros",
+        "paginate":{
+          "previous":"Anterior",
+          "next":"Siguiente"
+        }
+      }
     });
   });
-
+  $(".select2").select2();
 //$(document).ready(function(){
   $("#file").change(function () {
     filePreview(this);
@@ -228,5 +292,7 @@ desired effect
   }
 //});
 </script>
+    @yield('script')
+
 </body>
 </html>

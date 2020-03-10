@@ -26,21 +26,55 @@
       <ul class="sidebar-menu">
         <li class="header">MENU</li>
         <!-- Optionally, you can add icons to the links -->
-        <li {{ request()->is('/admin/dashboard') ? 'class=active' : '' }}><a href="{{url('/admin/dashboard')}}"><i class="fa fa-link"></i> <span>Dashboard</span></a></li>
-        <li {{ request()->is('complexes') ? 'class=active' : '' }}><a href="{{url('complexes')}}"><i class="fa fa-link"></i> <span>Complejos Residenciales</span></a></li>
-        <li {{ request()->is('/') ? 'active' : '' }}>
-          <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
+        <li {{ request()->is('admin/dashboard') ? 'class=active' : '' }}>
+          <a href="{{url('admin/dashboard')}}"><i class="fa fa-link"></i> 
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li {{ request()->is('admin/customers') ? 'class=active' : '' }}>
+          <a href="{{ route('customers.index') }}"><i class="fa fa-link"></i> 
+            <span>Clientes</span>
+          </a>
+        </li>
+        <li class="treeview {{ request()->is('admin/products') ? 'active' : '' }}">
+          <a href="#"><i class="fa fa-link"></i> <span>Almacen</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#">Link in level 2</a></li>
-            <li><a href="#">Link in level 2</a></li>
+            <li {{ request()->is('admin/products') ? 'class=active' : '' }}>
+              <a href="{{route('products.index')}}">Productos</a>
+            </li>
+            <li {{ request()->is('admin/categories') ? 'class=active' : '' }}>
+              <a href="{{ route('categories.index') }}">Categorias</a>
+            </li>
+            <li {{ request()->is('brands') ? 'class=active' : '' }}>
+              <a href="{{url('/admin/brands')}}">Marcas</a>
+            </li>
+            <li>
+              <a href="{{ route('attributes.index') }}">Atributos</a>
+            </li>
+            <li>
+              <a href="{{ route('terms.index') }}">Terminos</a>
+            </li>
           </ul>
         </li>
-
-        <li {{ request()->is('usuarios') ? 'class=active' : '' }}><a href="{{url('admin/usuarios')}}"><i class="fa fa-link"></i> <span>Ususarios</span></a></li>
+        <li {{ request()->is('admin/orders') ? 'class=active' : '' }}>
+          <a href="{{route('orders.index')}}"><i class="fa fa-link"></i> 
+            <span>Pedidos</span>
+          </a>
+        </li>
+        <li {{ request()->is('admin/reports') ? 'class=active' : '' }}>
+          <a href="{{url('admin/reports')}}"><i class="fa fa-link"></i> 
+            <span>Reportes</span>
+          </a>
+        </li>
+        <li {{ request()->is('admin/users') ? 'class=active' : '' }}>
+          <a href="{{route('users.index')}}"><i class="fa fa-link"></i> 
+            <span>Usuarios</span>
+          </a>
+        </li>
 
       </ul>
       <!-- /.sidebar-menu -->
